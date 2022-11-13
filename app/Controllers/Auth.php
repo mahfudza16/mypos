@@ -9,6 +9,7 @@ class Auth extends BaseController{
     function __construct(){
         session_start();
         $this->auth = new M_auth();
+        $this->session=session();
     }
 
     public function login(){
@@ -25,12 +26,12 @@ class Auth extends BaseController{
             $password = $_POST['password'];
             
             $auth = $this->auth->login($username, $password);
-            $session=session();
+            
             
             if($auth){
                 
-                $session->set('username', $username);
-                $session->set('userid', $auth[0]->id);
+                $this->session->set('username', $username);
+                $this->session->set('userid', $auth[0]->id);
                 //die(var_dump($_SESSION));
                 //die("test");
                 header("Location:".site_url("produk"));
